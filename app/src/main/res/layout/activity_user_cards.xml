@@ -16,9 +16,11 @@ android:layout_height="match_parent">
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:src = "@drawable/thor"
+            android:src = "@drawable/dashboard"
             android:onClick="moveDrawer"
-            android:id="@+id/imageButton" />
+            android:id="@+id/imageButton"
+            android:background="#FFFFFF"
+            android:paddingTop="5dp" />
         <SearchView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
