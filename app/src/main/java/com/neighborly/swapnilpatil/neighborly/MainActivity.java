@@ -26,6 +26,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -43,6 +52,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+    private Drawer drawer;//Works without
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +61,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_cards);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.simple_list_item_1,data);
 
-        mDrawerList = (ListView)findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mDrawerList.setAdapter(adapter);
-        /*mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        //mActivityTitle = getTitle().toString();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-        //addingLists();
+        //mDrawerList = (ListView)findViewById(R.id.navList);
+        //mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        //mDrawerList.setAdapter(adapter);
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -76,8 +76,47 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //addDrawerItems();
-        //setupDrawer();
+        /////Works without
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        DrawerBuilder builder = new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .addDrawerItems(
+                        new SecondaryDrawerItem().withIcon(R.drawable.menu_icon1).withName(R.string.drawer_title1),
+                        new SecondaryDrawerItem().withIcon(R.drawable.menu_icon2).withName(R.string.drawer_title2),
+                        new SecondaryDrawerItem().withIcon(R.drawable.menu_icon3).withName(R.string.drawer_title3),
+                        new SecondaryDrawerItem().withIcon(R.drawable.menu_icon4).withName(R.string.drawer_title4),
+                        new SecondaryDrawerItem().withIcon(R.drawable.menu_icon5).withName(R.string.drawer_title5)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+
+                        if (drawerItem != null) {
+                            if (drawerItem instanceof Nameable) {
+                                //toolbar.setTitle(((Nameable)
+                                //drawerItem).getNameRes());
+                            }
+                        }
+
+                        return false;
+
+                    }
+                });
+        drawer = builder.build();
+        /////Works without
     }
 
     private List<Categories> createList(int size) {
@@ -131,7 +170,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void moveDrawer(View view) {
-        mDrawerLayout.openDrawer(Gravity.LEFT); //Works without
+        //mDrawerLayout.openDrawer(Gravity.LEFT); //Works without
+        drawer.openDrawer();
         //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show(); //Works With
     }
 }

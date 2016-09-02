@@ -9,4 +9,9 @@
     <string name="drawer_close">Close</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_title1">Title1</string>
+    <string name="drawer_title2">Title2</string>
+    <string name="drawer_title3">Title3</string>
+    <string name="drawer_title4">Title4</string>
+    <string name="drawer_title5">Title5</string>
 </resources>

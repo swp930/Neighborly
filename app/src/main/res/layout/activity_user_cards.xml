@@ -9,11 +9,21 @@ android:layout_height="match_parent">
 
 </RelativeLayout>
 -->
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/thor"
+            android:onClick="moveDrawer"
+            android:id="@+id/imageButton" />
+        <SearchView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView" />
+    </LinearLayout>
 
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
