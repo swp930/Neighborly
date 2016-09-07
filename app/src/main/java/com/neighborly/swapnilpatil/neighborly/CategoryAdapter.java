@@ -79,7 +79,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 @Override
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(v.getContext(),UserActivity.class);
+                    Intent intent = new Intent(v.getContext(),RequestActivity.class);
                     latLng = findLatLng(vName.getText().toString());
                     intent.putExtra(EXTRA_MESSAGE_LATLNG,latLng);
                     intent.putExtra(EXTRA_MESSAGE_SERVICE,vName.getText().toString());

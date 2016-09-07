@@ -46,6 +46,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private List<String> categoryNames = new ArrayList<String>();
     private List<LatLng> locationNames = new ArrayList<LatLng>();
     private GoogleMap mMap;
+    Database database = new Database();
     final String[] data = {"one", "two", "three"};
     private Drawer drawer;//Works without
 
@@ -109,33 +110,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         /////Works without
     }
 
-    private List<String> getList()
-    {
-        List<String> names = new ArrayList<String>();
-        names.add("Need help with plumbing!");
-        names.add("Need jumper cables");
-        names.add("Pack of Bandages");
-        names.add("Safety");
-        names.add("Computer troubleshooting issues");
-        names.add("Counseling needed");
-        return names;
-    }
-
-    private List<LatLng> getLatList()
-    {
-        List<LatLng> latLngs = new ArrayList<LatLng>();
-        latLngs.add(new LatLng(37.7876, -122.3967));
-        latLngs.add(new LatLng(37.783004, -122.444117));
-        latLngs.add(new LatLng(37.869433133014546, -122.27645874023438));
-        latLngs.add(new LatLng(37.68599392939966, -122.47215270996094));
-        latLngs.add(new LatLng(37.90736658145496, -122.54150390625));
-        latLngs.add(new LatLng(37.63598495426961, -122.41928100585938));
-        return latLngs;
-    }
-
     private List<Categories> createList(int size) {
-        categoryNames = getList();
-        locationNames = getLatList();
+        categoryNames = database.getCategoryList();
+        locationNames = database.getLatList();
         List<Categories> result = new ArrayList<Categories>();
         for (int i=0; i < categoryNames.size(); i++) {
             Categories ci = new Categories();
@@ -152,7 +129,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng sanfran = new LatLng(37.7876, -122.3967);
-        List<LatLng> list = getLatList();
+        List<LatLng> list = database.getLatList();
         for(int i = 0; i<list.size();i++)
         {
             mMap.addMarker(new MarkerOptions().position(list.get(i)).title(categoryNames.get(i)));

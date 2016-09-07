@@ -40,7 +40,7 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
-        ratingBar.setRating(Float.parseFloat("2.0"));
+        ratingBar.setRating(Float.parseFloat("3.5"));
         Intent intent = getIntent();
         String[] words = intent.getStringArrayExtra(EXTRA_MESSAGE);
         TextView textView = (TextView) findViewById(R.id.textView2);
@@ -129,7 +129,6 @@ public class ProfileActivity extends Activity {
         List<Profiles> result = new ArrayList<Profiles>();
         for (int i=0; i < profileNames.size(); i++) {
             Profiles ci = new Profiles();
-            //ci.name = profileNames.get(i);
             ci.name= profileNames.get(i);
             result.add(ci);
         }

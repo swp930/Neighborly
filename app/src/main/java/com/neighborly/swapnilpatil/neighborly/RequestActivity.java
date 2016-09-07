@@ -2,14 +2,18 @@ package com.neighborly.swapnilpatil.neighborly;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,9 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserActivity extends FragmentActivity implements OnMapReadyCallback {
+public class RequestActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private List<String> userNames = new ArrayList<String>();
+    private List<String> requestNames = new ArrayList<String>();
     public final static String EXTRA_MESSAGE_LATLNG = "com.neighborly.swapnilpatil.neighborly.MESSAGE.LatLng";
     public final static String EXTRA_MESSAGE_SERVICE = "com.neighborly.swapnilpatil.neighborly.MESSAGE.Service";
     private GoogleMap mMap;
@@ -44,21 +48,15 @@ public class UserActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_cards);
+        setContentView(R.layout.activity_request_cards);
         Intent intent = getIntent();
         latLng = intent.getParcelableExtra(EXTRA_MESSAGE_LATLNG);
-        //wrapper = intent.getParcelableExtra(EXTRA_MESSAGE);
         String serviceType = intent.getStringExtra(EXTRA_MESSAGE_SERVICE);
-        TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(serviceType);
-
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);//Will have to delete
-        recList.setHasFixedSize(true);//Will have to delete
-        LinearLayoutManager llm = new LinearLayoutManager(this);//Will have to delete
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        UserAdapter ca = new UserAdapter(createList(30),serviceType);
-        recList.setAdapter(ca);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -124,26 +122,20 @@ public class UserActivity extends FragmentActivity implements OnMapReadyCallback
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Users> createList(int size) {
-        userNames.add("Donald Trump");
-        userNames.add("Adam Johnson");
-        userNames.add("Richard Nixon");
-        userNames.add("Bill Clinton");
-        userNames.add("Barack Obama");
-        userNames.add("Abraham Lincoln");
-        userNames.add("George Washington");
-        /*for(int i = 0; i<7;i++)
-        {
-            userNames.add("User"+(i+1));
-        }*/
-        List<Users> result = new ArrayList<Users>();
-        for (int i=0; i < userNames.size(); i++) {
-            Users ci = new Users();
-            ci.name = userNames.get(i);
+    private List<Requests> createList(int size) {
+        requestNames.add("Donald Trump");
+        requestNames.add("Adam Johnson");
+        requestNames.add("Richard Nixon");
+        requestNames.add("Bill Clinton");
+        requestNames.add("Barack Obama");
+        requestNames.add("Abraham Lincoln");
+        requestNames.add("George Washington");
+        List<Requests> result = new ArrayList<Requests>();
+        for (int i=0; i < requestNames.size(); i++) {
+            Requests ci = new Requests();
+            ci.name = requestNames.get(i);
             result.add(ci);
-
         }
-
         return result;
     }
 
@@ -151,9 +143,6 @@ public class UserActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         System.out.println("Location: "+latLng.toString());
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng latLng2 = new LatLng(37.7876, -122.3967);
         LatLng location = new LatLng(37.7876, -122.3967);
         mMap.addMarker(new MarkerOptions().position(latLng).title("San Francisco"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,6.0f));
