@@ -35,23 +35,26 @@ import java.util.List;
 public class UserActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private List<String> userNames = new ArrayList<String>();
-    public final static String EXTRA_MESSAGE = "com.neighborly.swapnilpatil.neighborly.MESSAGE";
+    public final static String EXTRA_MESSAGE_LATLNG = "com.neighborly.swapnilpatil.neighborly.MESSAGE.LatLng";
+    public final static String EXTRA_MESSAGE_SERVICE = "com.neighborly.swapnilpatil.neighborly.MESSAGE.Service";
     private GoogleMap mMap;
+    private LatLng latLng;
     private Drawer drawer;//Works without
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_my);
         setContentView(R.layout.activity_user_cards);
-        //addingLists();
         Intent intent = getIntent();
-        String serviceType = intent.getStringExtra(EXTRA_MESSAGE);
+        latLng = intent.getParcelableExtra(EXTRA_MESSAGE_LATLNG);
+        //wrapper = intent.getParcelableExtra(EXTRA_MESSAGE);
+        String serviceType = intent.getStringExtra(EXTRA_MESSAGE_SERVICE);
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(serviceType);
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+
+        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);//Will have to delete
+        recList.setHasFixedSize(true);//Will have to delete
+        LinearLayoutManager llm = new LinearLayoutManager(this);//Will have to delete
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         UserAdapter ca = new UserAdapter(createList(30),serviceType);
@@ -59,6 +62,7 @@ public class UserActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
@@ -145,12 +149,15 @@ public class UserActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        System.out.println("Location: "+latLng.toString());
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(37.7876, -122.3967);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("San Francisco"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng latLng2 = new LatLng(37.7876, -122.3967);
+        LatLng location = new LatLng(37.7876, -122.3967);
+        mMap.addMarker(new MarkerOptions().position(latLng).title("San Francisco"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,6.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
     }
 
     public void moveDrawer(View view) {

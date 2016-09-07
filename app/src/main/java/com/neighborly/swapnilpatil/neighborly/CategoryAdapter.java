@@ -15,12 +15,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private List<Categories> categoryList;
-    public final static String EXTRA_MESSAGE = "com.neighborly.swapnilpatil.neighborly.MESSAGE";
+    private static List<Categories> categoryList;
+    public final static String EXTRA_MESSAGE_SERVICE = "com.neighborly.swapnilpatil.neighborly.MESSAGE.Service";
+    public final static String EXTRA_MESSAGE_LATLNG = "com.neighborly.swapnilpatil.neighborly.MESSAGE.LatLng";
 
     public CategoryAdapter(List<Categories> categoryList) {
         this.categoryList = categoryList;
@@ -32,19 +35,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categoryList.size();
     }
 
+    public static LatLng findLatLng(String word)
+    {
+        for (int i = 0; i<categoryList.size();i++)
+        {
+            if(categoryList.get(i).name.equals(word))
+            {
+                System.out.println("Dis shit Found");
+                return categoryList.get(i).latLng;
+            }
+        }
+        System.out.println("Dis shit Not found");
+        return categoryList.get(0).latLng;
+    }
+
     @Override
     public void onBindViewHolder(CategoryViewHolder categoryViewHolder, int i) {
         Categories ci = categoryList.get(i);
         categoryViewHolder.vName.setText(ci.name);
-        //Drawable drawable = ContextCompat.getDrawable(categoryViewHolder.itemView.getContext(),ci.imageId);
-        //if(drawable == null)
-            //System.out.println("Fucked up");
-
-        //categoryViewHolder.vImage.setImageDrawable(ci.imageId);
-
-        //categoryViewHolder.vSurname.setText(ci.surname);
-        //categoryViewHolder.vEmail.setText(ci.email);
-        //categoryViewHolder.vTitle.setText(ci.name + " " + ci.surname);
     }
 
     @Override
@@ -59,31 +67,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vName;
-        //protected ImageView vImage;
-
         protected RelativeLayout relativeLayout;
         protected CardView cardView;
-        //protected TextView vSurname;
-        //protected TextView vEmail;
-        //protected TextView vTitle;
+        protected LatLng latLng = new LatLng(37.7876, -122.3967);
 
         public CategoryViewHolder(View v) {
             super(v);
             vName =  (TextView) v.findViewById(R.id.txtName);
             cardView = (CardView) v.findViewById(R.id.card_view);
-            //relativeLayout = (RelativeLayout) v.findViewById(R.id.cardList);
             cardView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(v.getContext(),UserActivity.class);
-                    intent.putExtra(EXTRA_MESSAGE,vName.getText().toString());
+                    latLng = findLatLng(vName.getText().toString());
+                    intent.putExtra(EXTRA_MESSAGE_LATLNG,latLng);
+                    intent.putExtra(EXTRA_MESSAGE_SERVICE,vName.getText().toString());
                     v.getContext().startActivity(intent);
                 }
             });
-            //vSurname = (TextView)  v.findViewById(R.id.txtSurname);
-            //vEmail = (TextView)  v.findViewById(R.id.txtEmail);
-            //vTitle = (TextView) v.findViewById(R.id.title);
         }
     }
 }

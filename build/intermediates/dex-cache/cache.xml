@@ -138,7 +138,7 @@
         jar="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="c428269492dc51b375f84ddce3ac70aa1d7b0fec">
+        sha1="49ee70c8a5efaa638aeed82e4f5f2eeb468fd56a">
         <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_120d5494bef58d7dfd66aed30242f0e623564df7/classes.dex" />
     </item>
     <item
@@ -205,10 +205,17 @@
         <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/2/android-query.0.24.3_09367c213c49dd2da0cbc2ed7e85ccda05b7ecbe/classes.dex" />
     </item>
     <item
+        jar="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/exploded-aar/com.mikepenz/iconics/1.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="720dcbcd8744b145da58d835d7e4dbc546886df7">
+        <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-iconics-1.2.0_5985a2ad71083a133c3e45dc3309658f509a9a8e/classes.dex" />
+    </item>
+    <item
         jar="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="95656d0e26e9c79c9976bccf944914bff4d51a91">
+        sha1="ea32486687bdabab6beb3dc3d57cfc1a57bfcf3d">
         <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_21e771bc41781caf6526fa2eeaffdf6856bcab59/classes.dex" />
     </item>
     <item
@@ -273,6 +280,13 @@
         revision="23.0.1"
         sha1="18b5697c65c4fe5b7381613b8b8ae9ac52e26fa7">
         <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.4.0_f70644c202c2d401e7b2160ae56626edc3d580d8/classes.dex" />
+    </item>
+    <item
+        jar="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/exploded-aar/com.mikepenz/materialdrawer/3.1.2/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="c9b5ab5d31472e2edec0b741355aa2fc18d16a0c">
+        <dex dex="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-materialdrawer-3.1.2_845d2500a83706414c8c3e381e326b304d822064/classes.dex" />
     </item>
     <item
         jar="/Users/swapnilpatil/AndroidStudioProjects/Neighborly/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/9.4.0/jars/classes.jar"

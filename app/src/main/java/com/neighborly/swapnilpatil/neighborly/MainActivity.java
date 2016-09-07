@@ -44,26 +44,16 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private List<String> categoryNames = new ArrayList<String>();
-    private List<Drawable> lists = new ArrayList<Drawable>();
+    private List<LatLng> locationNames = new ArrayList<LatLng>();
     private GoogleMap mMap;
-    private ListView mDrawerList;
     final String[] data = {"one", "two", "three"};
-    private DrawerLayout mDrawerLayout;
-    private ArrayAdapter<String> mAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private String mActivityTitle;
     private Drawer drawer;//Works without
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_my);
         setContentView(R.layout.activity_cards);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.simple_list_item_1,data);
-
-        //mDrawerList = (ListView)findViewById(R.id.navList);
-        //mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        //mDrawerList.setAdapter(adapter);
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -76,7 +66,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        /////Works without
+
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
@@ -119,40 +109,38 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         /////Works without
     }
 
+    private List<String> getList()
+    {
+        List<String> names = new ArrayList<String>();
+        names.add("Need help with plumbing!");
+        names.add("Need jumper cables");
+        names.add("Pack of Bandages");
+        names.add("Safety");
+        names.add("Computer troubleshooting issues");
+        names.add("Counseling needed");
+        return names;
+    }
+
+    private List<LatLng> getLatList()
+    {
+        List<LatLng> latLngs = new ArrayList<LatLng>();
+        latLngs.add(new LatLng(37.7876, -122.3967));
+        latLngs.add(new LatLng(37.783004, -122.444117));
+        latLngs.add(new LatLng(37.869433133014546, -122.27645874023438));
+        latLngs.add(new LatLng(37.68599392939966, -122.47215270996094));
+        latLngs.add(new LatLng(37.90736658145496, -122.54150390625));
+        latLngs.add(new LatLng(37.63598495426961, -122.41928100585938));
+        return latLngs;
+    }
+
     private List<Categories> createList(int size) {
-        categoryNames.add("Plumbing");
-        //Drawable drawablePlumbing = ContextCompat.getDrawable(getApplicationContext(),R.drawable.plumbingicon);
-        //lists.add(drawablePlumbing);
-
-        categoryNames.add("Car");
-        //Drawable drawableCar = ContextCompat.getDrawable(getApplicationContext(),R.drawable.caricon);
-        //lists.add(drawableCar);
-
-        categoryNames.add("Medical");
-        //Drawable drawableMedical = ContextCompat.getDrawable(getApplicationContext(),R.drawable.medicalicon);
-        //lists.add(drawableMedical);
-
-        categoryNames.add("Safety");
-        //Drawable drawableSafety = ContextCompat.getDrawable(getApplicationContext(),R.drawable.safetyicon);
-        //lists.add(drawableSafety);
-
-        categoryNames.add("Electronics");
-        //Drawable drawableElectronics = ContextCompat.getDrawable(getApplicationContext(),R.drawable.electronicsicon);
-        //lists.add(drawableElectronics);
-
-        categoryNames.add("Food/Groceries");
-        //Drawable drawableFood = ContextCompat.getDrawable(getApplicationContext(),R.drawable.foodicon);
-        //lists.add(drawableFood);
-
-        categoryNames.add("Advice");
-        //Drawable drawableAdvice = ContextCompat.getDrawable(getApplicationContext(),R.drawable.adviceicon);
-        //lists.add(drawableAdvice);
-
+        categoryNames = getList();
+        locationNames = getLatList();
         List<Categories> result = new ArrayList<Categories>();
         for (int i=0; i < categoryNames.size(); i++) {
             Categories ci = new Categories();
             ci.name = categoryNames.get(i);
-            //ci.imageId = lists.get(i);
+            ci.latLng = locationNames.get(i);
             result.add(ci);
         }
         return result;
@@ -163,15 +151,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(37.7876, -122.3967);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("San Francisco"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng sanfran = new LatLng(37.7876, -122.3967);
+        List<LatLng> list = getLatList();
+        for(int i = 0; i<list.size();i++)
+        {
+            mMap.addMarker(new MarkerOptions().position(list.get(i)).title(categoryNames.get(i)));
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanfran,9.0f));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.7876, -122.3967), 12.0f));
     }
 
 
     public void moveDrawer(View view) {
-        //mDrawerLayout.openDrawer(Gravity.LEFT); //Works without
         drawer.openDrawer();
-        //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show(); //Works With
     }
 }
