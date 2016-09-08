@@ -22,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.text.Text;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -41,7 +42,11 @@ public class RequestActivity extends FragmentActivity implements OnMapReadyCallb
     private List<String> requestNames = new ArrayList<String>();
     public final static String EXTRA_MESSAGE_LATLNG = "com.neighborly.swapnilpatil.neighborly.MESSAGE.LatLng";
     public final static String EXTRA_MESSAGE_SERVICE = "com.neighborly.swapnilpatil.neighborly.MESSAGE.Service";
+    public final static String EXTRA_MESSAGE_USER = "com.neighborly.swapnilpatil.neighborly.MESSAGE.User";
+    public final static String EXTRA_MESSAGE = "com.neighborly.swapnilpatil.neighborly.MESSAGE";
     private GoogleMap mMap;
+    private String user;
+    private String serviceType;
     private LatLng latLng;
     private Drawer drawer;//Works without
 
@@ -51,12 +56,12 @@ public class RequestActivity extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_request_cards);
         Intent intent = getIntent();
         latLng = intent.getParcelableExtra(EXTRA_MESSAGE_LATLNG);
-        String serviceType = intent.getStringExtra(EXTRA_MESSAGE_SERVICE);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
+        user = intent.getStringExtra(EXTRA_MESSAGE_USER);
+        serviceType = intent.getStringExtra(EXTRA_MESSAGE_SERVICE);
+        TextView textView = (TextView) findViewById(R.id.textView6);
+        TextView textView2 = (TextView) findViewById(R.id.textView5);
+        textView.setText(user);
+        textView2.setText(serviceType);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -129,7 +134,6 @@ public class RequestActivity extends FragmentActivity implements OnMapReadyCallb
         requestNames.add("Bill Clinton");
         requestNames.add("Barack Obama");
         requestNames.add("Abraham Lincoln");
-        requestNames.add("George Washington");
         List<Requests> result = new ArrayList<Requests>();
         for (int i=0; i < requestNames.size(); i++) {
             Requests ci = new Requests();
@@ -144,12 +148,18 @@ public class RequestActivity extends FragmentActivity implements OnMapReadyCallb
         System.out.println("Location: "+latLng.toString());
         mMap = googleMap;
         LatLng location = new LatLng(37.7876, -122.3967);
-        mMap.addMarker(new MarkerOptions().position(latLng).title("San Francisco"));
+        mMap.addMarker(new MarkerOptions().position(latLng).title(serviceType));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,6.0f));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
     }
 
     public void moveDrawer(View view) {
         drawer.openDrawer();
+    }
+
+    public void openActivity(View view) {
+        Intent intent = new Intent(this,ProfileActivity.class);
+        intent.putExtra(EXTRA_MESSAGE,user);
+        startActivity(intent);
     }
 }

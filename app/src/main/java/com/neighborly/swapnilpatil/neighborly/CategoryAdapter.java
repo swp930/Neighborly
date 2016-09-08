@@ -24,6 +24,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private static List<Categories> categoryList;
     public final static String EXTRA_MESSAGE_SERVICE = "com.neighborly.swapnilpatil.neighborly.MESSAGE.Service";
     public final static String EXTRA_MESSAGE_LATLNG = "com.neighborly.swapnilpatil.neighborly.MESSAGE.LatLng";
+    public final static String EXTRA_MESSAGE_USER = "com.neighborly.swapnilpatil.neighborly.MESSAGE.User";
 
     public CategoryAdapter(List<Categories> categoryList) {
         this.categoryList = categoryList;
@@ -35,18 +36,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categoryList.size();
     }
 
-    public static LatLng findLatLng(String word)
+    public static int findLatLng(String word)
     {
         for (int i = 0; i<categoryList.size();i++)
         {
             if(categoryList.get(i).name.equals(word))
             {
-                System.out.println("Dis shit Found");
-                return categoryList.get(i).latLng;
+                return i;
             }
         }
-        System.out.println("Dis shit Not found");
-        return categoryList.get(0).latLng;
+        return 0;
     }
 
     @Override
@@ -67,6 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vName;
+        private Database database = new Database();
         protected RelativeLayout relativeLayout;
         protected CardView cardView;
         protected LatLng latLng = new LatLng(37.7876, -122.3967);
@@ -80,9 +80,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(v.getContext(),RequestActivity.class);
-                    latLng = findLatLng(vName.getText().toString());
+                    String service = vName.getText().toString();
+                    int index = findLatLng(service);
+                    latLng = categoryList.get(index).latLng;
+                    String user = database.getUser(index);
                     intent.putExtra(EXTRA_MESSAGE_LATLNG,latLng);
-                    intent.putExtra(EXTRA_MESSAGE_SERVICE,vName.getText().toString());
+                    intent.putExtra(EXTRA_MESSAGE_SERVICE,service);
+                    intent.putExtra(EXTRA_MESSAGE_USER,user);
                     v.getContext().startActivity(intent);
                 }
             });

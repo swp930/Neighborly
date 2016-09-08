@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -47,21 +48,23 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
         protected TextView vName, textView;
         protected CardView cardView;
+        protected ImageView imageView;
+
         public RequestViewHolder(View v) {
             super(v);
-            /*vName =  (TextView) v.findViewById(R.id.txtName);
-            cardView = (CardView) v.findViewById(R.id.card_view);
-            cardView.setOnClickListener(new View.OnClickListener(){
+            Intent intent = new Intent(v.getContext(),ProfileActivity.class);
+            cardView = (CardView) v.findViewById(R.id.card_view2);
+            imageView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v)
                 {
                     Intent intent = new Intent(v.getContext(),ProfileActivity.class);
-                    String[] words = {vName.getText().toString(),serviceType};
-                    intent.putExtra(EXTRA_MESSAGE,words);
+                    String[] array = {"word1","word2"};
+                    intent.putExtra(EXTRA_MESSAGE,array);
                     v.getContext().startActivity(intent);
-                    Log.v("RequestAdapter", "Success");
                 }
-            });*/
+            });
         }
+
     }
 }

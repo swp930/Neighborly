@@ -42,12 +42,11 @@ public class ProfileActivity extends Activity {
         RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
         ratingBar.setRating(Float.parseFloat("3.5"));
         Intent intent = getIntent();
-        String[] words = intent.getStringArrayExtra(EXTRA_MESSAGE);
+        String word = intent.getStringExtra(EXTRA_MESSAGE);
         TextView textView = (TextView) findViewById(R.id.textView2);
-        textView.setText(words[0]);
-        TextView textView1 = (TextView) findViewById(R.id.textView3);
-        textView1.setText(words[1]);
-
+        textView.setText(word);
+        TextView textView2 = (TextView) findViewById(R.id.textView3);
+        textView2.setText("(408)123-4567");
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);

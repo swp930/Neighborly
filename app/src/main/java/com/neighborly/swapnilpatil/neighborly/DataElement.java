@@ -10,10 +10,12 @@ import com.google.android.gms.maps.model.LatLng;
 public class DataElement {
     public String word;
     public LatLng latLng;
+    public String user;
 
-    public DataElement(String word, LatLng latLng)
+    public DataElement(String word, LatLng latLng, String user)
     {
         this.word = word;
         this.latLng = latLng;
+        this.user = user;
     }
 }
